@@ -31,6 +31,6 @@ jobs:
         # The message for the commit
         message: Build
         # Additional arguments for the git commit command
-        commit: --force
+        # commit: --force
         # The name of the branch to create.
         new_branch: develop-builds
