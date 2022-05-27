@@ -33,3 +33,4 @@ jobs:
         # commit: --force
         # The name of the branch to create.
         new_branch: develop-builds
+        push: origin develop-builds --force
