@@ -24,13 +24,11 @@ jobs:
         # A file, directory or wildcard pattern that describes what to upload
         path: build.tar
     - run: rm build.tar
-    - name: Add & Commit
-      uses: EndBug/add-and-commit@v9.0.0
+    - name: GitHub Pages
+      uses: crazy-max/ghaction-github-pages@v2.6.0
       with:
-        # The message for the commit
-        message: Build
-        # Additional arguments for the git commit command
-        # commit: --force
-        # The name of the branch to create.
-        new_branch: develop-builds
-        push: origin develop-builds --force
+        build_dir: .
+        target_branch: develop-builds
+        verbose: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
