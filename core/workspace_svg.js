@@ -1510,7 +1510,7 @@ Blockly.WorkspaceSvg.prototype.showContextMenu_ = function(e) {
   var deleteOption = {
     text: deleteCount == 1 ? Blockly.Msg.DELETE_BLOCK :
         Blockly.Msg.DELETE_X_BLOCKS.replace('%1', String(deleteCount)),
-    enabled: deleteCount > 0,
+    enabled: deleteCount > -1,
     callback: function() {
       if (ws.currentGesture_) {
         ws.currentGesture_.cancel();

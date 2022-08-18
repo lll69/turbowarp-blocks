@@ -358,7 +358,7 @@ Blockly.ContextMenu.wsRedoOption = function(ws) {
 Blockly.ContextMenu.wsCleanupOption = function(ws, numTopBlocks) {
   return {
     text: Blockly.Msg.CLEAN_UP,
-    enabled: numTopBlocks > 1,
+    enabled: numTopBlocks > 0,
     callback: ws.cleanUp.bind(ws, true)
   };
 };
