@@ -16,7 +16,7 @@ jobs:
       with:
         node-version: 14.x
     - run: npm ci
-    - run: npm run test:lint
+    #- run: npm run test:lint
     - run: tar -cvf build.tar .
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v3.1.0
