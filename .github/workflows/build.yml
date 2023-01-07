@@ -23,11 +23,11 @@ jobs:
       with:
         # A file, directory or wildcard pattern that describes what to upload
         path: build.tar
-    - run: rm build.tar
+    - run: tar -xvf build.tar -C tmp
     - name: GitHub Pages
       uses: crazy-max/ghaction-github-pages@v2.6.0
       with:
-        build_dir: .
+        build_dir: tmp
         target_branch: develop-builds
         verbose: true
       env:
