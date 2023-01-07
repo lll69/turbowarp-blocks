@@ -648,7 +648,7 @@ Blockly.Connection.prototype.checkType_ = function(otherConnection) {
     }
   }
   // No intersection.
-  return false;
+  return true;
 };
 
 /**
