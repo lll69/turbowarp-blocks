@@ -60,7 +60,12 @@ goog.require('goog.string');
  *     be generated.
  * @constructor
  */
-Blockly.Block = function(workspace, prototypeName, opt_id, xmlBlock) {
+Blockly.Block = function(workspace, prototypeName, opt_id) {
+  var xmlBlock = null;
+  if (typeof opt_id !== 'string' && opt_id.getAttribute) {
+    xmlBlock = id;
+    opt_id = xmlBlock.getAttribute('id');
+  }
   var flyoutWorkspace = workspace && workspace.getFlyout && workspace.getFlyout() ?
      workspace.getFlyout().getWorkspace() : null;
   /** @type {string} */
@@ -216,21 +221,21 @@ Blockly.Block = function(workspace, prototypeName, opt_id, xmlBlock) {
           var name = xmlChild.getAttribute('name');
           switch (xmlChild.nodeName.toLowerCase()) {
             case 'field':
-              protoName += "," + name + "= %" + args0.length;
+              protoName += " ," + name + "= %" + args0.length;
               args0.push({
                 "type": block.getField(name).getAttribute('type'),
                 "name": name
               });
               break;
             case 'value':
-              protoName += "," + name + "= %" + args0.length;
+              protoName += " ," + name + "= %" + args0.length;
               args0.push({
                 "type": "input_value",
                 "name": name
               });
               break;
             case 'statement':
-              protoName += "," + name + "= %" + args0.length;
+              protoName += " ," + name + "= %" + args0.length;
               args0.push({
                 "type": "input_statement",
                 "name": name
@@ -242,7 +247,7 @@ Blockly.Block = function(workspace, prototypeName, opt_id, xmlBlock) {
       prototype = {
         init: function () {
           this.jsonInit({
-            "message0": prototypeName,
+            "message0": protoName,
             "args0": args0,
             "category": null,
             "extensions": extensions
