@@ -663,7 +663,7 @@ Blockly.Xml.domToBlockHeadless_ = function(xmlBlock, workspace) {
   goog.asserts.assert(
       prototypeName, 'Block type unspecified: %s', xmlBlock.outerHTML);
   var id = xmlBlock.getAttribute('id');
-  block = new Blockly.Block(workspace, prototypeName, opt_id, xmlBlock);
+  block = new Blockly.Block(workspace, prototypeName, id, xmlBlock);
 
   var blockChild = null;
   for (var i = 0, xmlChild; xmlChild = xmlBlock.childNodes[i]; i++) {
