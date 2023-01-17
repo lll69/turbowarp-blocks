@@ -62,7 +62,7 @@ goog.require('goog.string');
  */
 Blockly.Block = function(workspace, prototypeName, opt_id) {
   var xmlBlock = null;
-  if (typeof opt_id !== 'string' && opt_id.getAttribute) {
+  if (typeof opt_id !== 'string' && opt_id && opt_id.getAttribute) {
     xmlBlock = opt_id;
     opt_id = opt_id.getAttribute('id');
   }
