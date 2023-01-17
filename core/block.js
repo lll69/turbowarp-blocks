@@ -60,7 +60,7 @@ goog.require('goog.string');
  *     be generated.
  * @constructor
  */
-Blockly.Block = function(workspace, prototypeName, opt_id) {
+Blockly.Block = function(workspace, prototypeName, opt_id, xmlBlock) {
   var flyoutWorkspace = workspace && workspace.getFlyout && workspace.getFlyout() ?
      workspace.getFlyout().getWorkspace() : null;
   /** @type {string} */
@@ -174,6 +174,82 @@ Blockly.Block = function(workspace, prototypeName, opt_id) {
     /** @type {string} */
     this.type = prototypeName;
     var prototype = Blockly.Blocks[prototypeName];
+    if (!prototype) {
+      console.log("prototype is null", prototypeName);
+      var args0 = [];
+      var extensions = [];
+      var protoName = prototypeName;
+      if (xmlBlock) {
+        for (var i = 0, xmlChild; xmlChild = xmlBlock.childNodes[i]; i++) {
+          if (xmlChild.nodeType == 3) {
+            // Ignore any text at the <block> level.  It's all whitespace anyway.
+            continue;
+          }
+          var input;
+      
+          // Find any enclosed blocks or shadows in this tag.
+          var childBlockElement = null;
+          var childShadowElement = null;
+          for (var j = 0, grandchild; grandchild = xmlChild.childNodes[j]; j++) {
+            if (grandchild.nodeType == 1) {
+              if (grandchild.nodeName.toLowerCase() == 'block') {
+                childBlockElement = /** @type {!Element} */ (grandchild);
+              } else if (grandchild.nodeName.toLowerCase() == 'shadow') {
+                childShadowElement = /** @type {!Element} */ (grandchild);
+              }
+            }
+          }
+          // Use the shadow block if there is no child block.
+          if (!childBlockElement && childShadowElement) {
+            childBlockElement = childShadowElement;
+          }
+
+          switch (xmlBlock.nodeName.toLowerCase()) {
+            case 'value':
+              extensions.push("output_string");
+              break;
+            case 'statement':
+              extensions.push("shape_statement");
+              break;
+          }
+
+          var name = xmlChild.getAttribute('name');
+          switch (xmlChild.nodeName.toLowerCase()) {
+            case 'field':
+              protoName += "," + name + "= %" + args0.length;
+              args0.push({
+                "type": block.getField(name).getAttribute('type'),
+                "name": name
+              });
+              break;
+            case 'value':
+              protoName += "," + name + "= %" + args0.length;
+              args0.push({
+                "type": "input_value",
+                "name": name
+              });
+              break;
+            case 'statement':
+              protoName += "," + name + "= %" + args0.length;
+              args0.push({
+                "type": "input_statement",
+                "name": name
+              });
+              break;
+          }
+        }
+      }
+      prototype = {
+        init: function () {
+          this.jsonInit({
+            "message0": prototypeName,
+            "args0": args0,
+            "category": null,
+            "extensions": extensions
+          });
+        }
+      };
+    }
     goog.asserts.assertObject(prototype,
         'Error: Unknown block type "%s".', prototypeName);
     goog.mixin(this, prototype);
