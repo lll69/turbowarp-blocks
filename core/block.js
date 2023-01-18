@@ -246,8 +246,8 @@ Blockly.Block = function(workspace, prototypeName, opt_id, xmlBlock) {
                 delete temp.jsonInit;
                 if (json) {
                   var i = 0;
-                  while (json['args' + i] !== undefined) {
-                    var len = json['args' + i].length;
+                  while (json['message' + i] !== undefined) {
+                    var len = (json['args' + i] || []).length;
                     for (var j = 0; j < len; j++) {
                       if (json['args' + i][j].name === tempName && json['args' + i][j].type.toLowerCase() === "input_statement") {
                         extensions = "shape_statement";
