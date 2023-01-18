@@ -229,40 +229,40 @@ Blockly.Block = function(workspace, prototypeName, opt_id, xmlBlock) {
               break;
           }
         }
-      }
-      if (xmlBlock.parentElement) switch (xmlBlock.parentElement.nodeName) {
-        case "statement":
-          extensions = "shape_statement";
-          break;
-        case "value":
-          if (xmlBlock.parentElement.parentElement && xmlBlock.parentElement.parentElement.nodeName === "block") {
-            var tempName = xmlBlock.parentElement.getAttribute("name");
-            var temp = Blockly.Blocks[xmlBlock.parentElement.parentElement.getAttribute("type")];
-            if (temp) {
-              var json = null;
-              temp.jsonInit = function (j) {
-                json = j;
-              }
-              temp.init();
-              delete temp.jsonInit;
-              if (json) {
-                var i = 0;
-                while (json['args' + i] !== undefined) {
-                  var len = json['args' + i].length;
-                  for (var j = 0; j < len; j++) {
-                    if (json['args' + i][j].name === tempName && json['args' + i][j].type === "input_statement") {
-                      extensions = "shape_statement";
-                    }
-                  }
-                  i++;
+        if (xmlBlock.parentElement) switch (xmlBlock.parentElement.nodeName) {
+          case "statement":
+            extensions = "shape_statement";
+            break;
+          case "value":
+            if (xmlBlock.parentElement.parentElement && xmlBlock.parentElement.parentElement.nodeName === "block") {
+              var tempName = xmlBlock.parentElement.getAttribute("name");
+              var temp = Blockly.Blocks[xmlBlock.parentElement.parentElement.getAttribute("type")];
+              if (temp) {
+                var json = null;
+                temp.jsonInit = function (j) {
+                  json = j;
                 }
+                temp.init();
+                delete temp.jsonInit;
+                if (json) {
+                  var i = 0;
+                  while (json['args' + i] !== undefined) {
+                    var len = json['args' + i].length;
+                    for (var j = 0; j < len; j++) {
+                      if (json['args' + i][j].name === tempName && json['args' + i][j].type === "input_statement") {
+                        extensions = "shape_statement";
+                      }
+                    }
+                    i++;
+                  }
+                }
+                this.tempJson = undefined;
               }
-              this.tempJson = undefined;
             }
-          }
-          if (extensions != "shape_statement")
-            extensions = "output_string";
-          break;
+            if (extensions != "shape_statement")
+              extensions = "output_string";
+            break;
+        }
       }
       if (!extensions) {
         extensions = "shape_statement";
