@@ -239,10 +239,13 @@ Blockly.Block = function(workspace, prototypeName, opt_id, xmlBlock) {
             var tempName = xmlBlock.parentElement.getAttribute("name");
             var temp = Blockly.Blocks[xmlBlock.parentElement.parentElement.getAttribute("type")];
             if (temp) {
-              this.tempJson = true;
+              var json = null;
+              temp.jsonInit = function (j) {
+                json = j;
+              }
               temp.init();
-              if (this.tempJson && this.tempJson !== true) {
-                var json = this.tempJson;
+              delete temp.jsonInit;
+              if (json) {
                 var i = 0;
                 while (json['args' + i] !== undefined) {
                   var len = json['args' + i].length;
