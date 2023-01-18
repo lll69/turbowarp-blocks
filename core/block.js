@@ -229,12 +229,12 @@ Blockly.Block = function(workspace, prototypeName, opt_id, xmlBlock) {
               break;
           }
         }
-        if (xmlBlock.parentElement) switch (xmlBlock.parentElement.nodeName) {
+        if (xmlBlock.parentElement) switch (xmlBlock.parentElement.nodeName.toLowerCase()) {
           case "statement":
             extensions = "shape_statement";
             break;
           case "value":
-            if (xmlBlock.parentElement.parentElement && xmlBlock.parentElement.parentElement.nodeName === "block") {
+            if (xmlBlock.parentElement.parentElement && xmlBlock.parentElement.parentElement.nodeName.toLowerCase() === "block") {
               var tempName = xmlBlock.parentElement.getAttribute("name");
               var temp = Blockly.Blocks[xmlBlock.parentElement.parentElement.getAttribute("type")];
               if (temp) {
@@ -249,7 +249,7 @@ Blockly.Block = function(workspace, prototypeName, opt_id, xmlBlock) {
                   while (json['args' + i] !== undefined) {
                     var len = json['args' + i].length;
                     for (var j = 0; j < len; j++) {
-                      if (json['args' + i][j].name === tempName && json['args' + i][j].type === "input_statement") {
+                      if (json['args' + i][j].name === tempName && json['args' + i][j].type.toLowerCase() === "input_statement") {
                         extensions = "shape_statement";
                       }
                     }
