@@ -216,25 +216,25 @@ Blockly.Block = function(workspace, prototypeName, opt_id, xmlBlock) {
           var name = xmlChild.getAttribute('name');
           switch (xmlChild.nodeName.toLowerCase()) {
             case 'field':
-              protoName += " ," + name + "= %" + args0.length;
               args0.push({
                 "type": block.parentElement.getAttribute('type'),
                 "name": name
               });
+              protoName += " ," + name + "= %" + args0.length;
               break;
             case 'value':
-              protoName += " ," + name + "= %" + args0.length;
               args0.push({
                 "type": "input_value",
                 "name": name
               });
+              protoName += " ," + name + "= %" + args0.length;
               break;
             case 'statement':
-              protoName += " ," + name + "= %" + args0.length;
               args0.push({
                 "type": "input_statement",
                 "name": name
               });
+              protoName += " ," + name + "= %" + args0.length;
               break;
           }
         }
