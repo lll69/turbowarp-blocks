@@ -60,12 +60,7 @@ goog.require('goog.string');
  *     be generated.
  * @constructor
  */
-Blockly.Block = function(workspace, prototypeName, opt_id) {
-  var xmlBlock = null;
-  if (typeof opt_id !== 'string' && opt_id && opt_id.getAttribute) {
-    xmlBlock = opt_id;
-    opt_id = opt_id.getAttribute('id');
-  }
+Blockly.Block = function(workspace, prototypeName, opt_id, xmlBlock) {
   var flyoutWorkspace = workspace && workspace.getFlyout && workspace.getFlyout() ?
      workspace.getFlyout().getWorkspace() : null;
   /** @type {string} */
@@ -223,7 +218,7 @@ Blockly.Block = function(workspace, prototypeName, opt_id) {
             case 'field':
               protoName += " ," + name + "= %" + args0.length;
               args0.push({
-                "type": block.getField(name).getAttribute('type'),
+                "type": block.parentElement.getAttribute('type'),
                 "name": name
               });
               break;

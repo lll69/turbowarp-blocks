@@ -468,6 +468,10 @@ Blockly.Workspace.prototype.newBlock = function(prototypeName, opt_id) {
   return new Blockly.Block(this, prototypeName, opt_id);
 };
 
+Blockly.Workspace.prototype.newBlockWithXml = function(prototypeName, opt_id, xmlBlock) {
+  return new Blockly.Block(this, prototypeName, opt_id, xmlBlock);
+};
+
 /**
  * Undo or redo the previous action.
  * @param {boolean} redo False if undo, true if redo.

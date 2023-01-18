@@ -572,6 +572,10 @@ Blockly.WorkspaceSvg.prototype.newBlock = function(prototypeName, opt_id) {
   return new Blockly.BlockSvg(this, prototypeName, opt_id);
 };
 
+Blockly.WorkspaceSvg.prototype.newBlockWithXml = function(prototypeName, opt_id, xmlBlock) {
+  return new Blockly.BlockSvg(this, prototypeName, opt_id, xmlBlock);
+};
+
 /**
  * Add a trashcan.
  * @param {number} bottom Distance from workspace bottom to bottom of trashcan.

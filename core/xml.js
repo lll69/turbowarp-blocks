@@ -664,7 +664,7 @@ Blockly.Xml.domToBlockHeadless_ = function(xmlBlock, workspace) {
       prototypeName, 'Block type unspecified: %s', xmlBlock.outerHTML);
   var id = xmlBlock.getAttribute('id');
 
-  block = workspace.newBlock(prototypeName, xmlBlock);
+  block = workspace.newBlockWithXml(prototypeName, id, xmlBlock);
 
   var blockChild = null;
   for (var i = 0, xmlChild; xmlChild = xmlBlock.childNodes[i]; i++) {

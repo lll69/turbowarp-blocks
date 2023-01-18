@@ -56,7 +56,7 @@ goog.require('goog.math.Coordinate');
  * @extends {Blockly.Block}
  * @constructor
  */
-Blockly.BlockSvg = function(workspace, prototypeName, opt_id) {
+Blockly.BlockSvg = function(workspace, prototypeName, opt_id, xmlBlock) {
   // Create core elements for the block.
   /**
    * @type {SVGElement}
@@ -82,7 +82,7 @@ Blockly.BlockSvg = function(workspace, prototypeName, opt_id) {
 
   Blockly.Tooltip.bindMouseEvents(this.svgPath_);
   Blockly.BlockSvg.superClass_.constructor.call(this,
-      workspace, prototypeName, opt_id);
+      workspace, prototypeName, opt_id, xmlBlock);
 
   // Expose this block's ID on its top-level SVG group.
   if (this.svgGroup_.dataset) {
