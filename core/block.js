@@ -235,7 +235,30 @@ Blockly.Block = function(workspace, prototypeName, opt_id, xmlBlock) {
           extensions = "shape_statement";
           break;
         case "value":
-          extensions = "output_string";
+          if (xmlBlock.parentElement.parentElement && xmlBlock.parentElement.parentElement.nodeName === "block") {
+            var tempName = xmlBlock.parentElement.getAttribute("name");
+            var temp = Blockly.Blocks[xmlBlock.parentElement.parentElement.getAttribute("type")];
+            if (temp) {
+              this.tempJson = true;
+              temp.init();
+              if (this.tempJson && this.tempJson !== true) {
+                var json = this.tempJson;
+                var i = 0;
+                while (json['args' + i] !== undefined) {
+                  var len = json['args' + i].length;
+                  for (var j = 0; j < len; j++) {
+                    if (json['args' + i][j].name === tempName && json['args' + i][j].type === "input_statement") {
+                      extensions = "shape_statement";
+                    }
+                  }
+                  i++;
+                }
+              }
+              this.tempJson = undefined;
+            }
+          }
+          if (extensions != "shape_statement")
+            extensions = "output_string";
           break;
       }
       if (!extensions) {
@@ -1330,6 +1353,10 @@ Blockly.Block.prototype.appendDummyInput = function(opt_name) {
  * @param {!Object} json Structured data describing the block.
  */
 Blockly.Block.prototype.jsonInit = function(json) {
+  if (this.tempJson === true) {
+    this.tempJson = json;
+    return;
+  }
   var warningPrefix = json['type'] ? 'Block "' + json['type'] + '": ' : '';
 
   // Validate inputs.
