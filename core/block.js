@@ -208,8 +208,9 @@ Blockly.Block = function(workspace, prototypeName, opt_id, xmlBlock) {
           switch (xmlChild.nodeName.toLowerCase()) {
             case 'field':
               args0.push({
-                "type": block.parentElement.getAttribute('type'),
-                "name": name
+                "type": "field_dropdown",
+                "name": name,
+                "options": []
               });
               protoName += " " + name + "= %" + args0.length;
               break;
