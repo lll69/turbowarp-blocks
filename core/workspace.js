@@ -468,8 +468,8 @@ Blockly.Workspace.prototype.newBlock = function(prototypeName, opt_id) {
   return new Blockly.Block(this, prototypeName, opt_id);
 };
 
-Blockly.Workspace.prototype.newBlockWithXml = function(prototypeName, opt_id, xmlBlock) {
-  return new Blockly.Block(this, prototypeName, opt_id, xmlBlock);
+Blockly.Workspace.prototype.newBlockWithXml = function(prototypeName, opt_id, xmlBlock, parentBlock) {
+  return new Blockly.Block(this, prototypeName, opt_id, xmlBlock, parentBlock);
 };
 
 /**

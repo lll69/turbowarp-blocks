@@ -60,7 +60,7 @@ goog.require('goog.string');
  *     be generated.
  * @constructor
  */
-Blockly.Block = function(workspace, prototypeName, opt_id, xmlBlock) {
+Blockly.Block = function(workspace, prototypeName, opt_id, xmlBlock, parentBlock) {
   var flyoutWorkspace = workspace && workspace.getFlyout && workspace.getFlyout() ?
     workspace.getFlyout().getWorkspace() : null;
   /** @type {string} */
@@ -235,32 +235,41 @@ Blockly.Block = function(workspace, prototypeName, opt_id, xmlBlock) {
             break;
           case "value":
             if (xmlBlock.parentElement.parentElement && xmlBlock.parentElement.parentElement.nodeName.toLowerCase() === "block") {
-              var tempName = xmlBlock.parentElement.getAttribute("name");
-              var temp = Blockly.Blocks[xmlBlock.parentElement.parentElement.getAttribute("type")];
-              if (temp) {
-                var json = null;
-                temp.jsonInit = function (j) {
-                  json = j;
-                }
-                try {
-                  temp.init();
-                } catch (e) {
-                  console.log(e);
-                }
-                delete temp.jsonInit;
-                if (json) {
-                  var i = 0;
-                  while (json['message' + i] !== undefined) {
-                    var len = (json['args' + i] || []).length;
-                    for (var j = 0; j < len; j++) {
-                      if (json['args' + i][j].name === tempName && json['args' + i][j].type.toLowerCase() === "input_statement") {
-                        extensions = "shape_statement";
-                      }
-                    }
-                    i++;
+              if (parentBlock) {
+                var tempName = xmlBlock.parentElement.getAttribute("name");
+                for (var j = 0; j < block.inputList.length; j++) {
+                  if (block.inputList[i].name === tempName && block.inputList[i].type == Blockly.NEXT_STATEMENT) {
+                    extensions = "shape_statement";
                   }
                 }
-                this.tempJson = undefined;
+              } else {
+                var tempName = xmlBlock.parentElement.getAttribute("name");
+                var temp = Blockly.Blocks[xmlBlock.parentElement.parentElement.getAttribute("type")];
+                if (temp) {
+                  var json = null;
+                  temp.jsonInit = function (j) {
+                    json = j;
+                  }
+                  try {
+                    temp.init();
+                  } catch (e) {
+                    console.log(e);
+                  }
+                  delete temp.jsonInit;
+                  if (json) {
+                    var i = 0;
+                    while (json['message' + i] !== undefined) {
+                      var len = (json['args' + i] || []).length;
+                      for (var j = 0; j < len; j++) {
+                        if (json['args' + i][j].name === tempName && json['args' + i][j].type.toLowerCase() === "input_statement") {
+                          extensions = "shape_statement";
+                        }
+                      }
+                      i++;
+                    }
+                  }
+                  this.tempJson = undefined;
+                }
               }
             }
             if (extensions != "shape_statement")
@@ -854,7 +863,7 @@ Blockly.Block.prototype.getMatchingConnection = function(otherBlock, conn) {
   var connections = this.getConnections_(true);
   var otherConnections = otherBlock.getConnections_(true);
   if (connections.length != otherConnections.length) {
-    throw "Connection lists did not match in length.";
+    //throw "Connection lists did not match in length.";
   }
   for (var i = 0; i < otherConnections.length; i++) {
     if (otherConnections[i] == conn) {
@@ -1360,10 +1369,6 @@ Blockly.Block.prototype.appendDummyInput = function(opt_name) {
  * @param {!Object} json Structured data describing the block.
  */
 Blockly.Block.prototype.jsonInit = function(json) {
-  if (this.tempJson === true) {
-    this.tempJson = json;
-    return;
-  }
   var warningPrefix = json['type'] ? 'Block "' + json['type'] + '": ' : '';
 
   // Validate inputs.

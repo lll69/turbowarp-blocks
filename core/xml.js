@@ -657,14 +657,14 @@ Blockly.Xml.domToVariables = function(xmlVariables, workspace) {
  * @return {!Blockly.Block} The root block created.
  * @private
  */
-Blockly.Xml.domToBlockHeadless_ = function(xmlBlock, workspace) {
+Blockly.Xml.domToBlockHeadless_ = function(xmlBlock, workspace, parentBlock) {
   var block = null;
   var prototypeName = xmlBlock.getAttribute('type');
   goog.asserts.assert(
       prototypeName, 'Block type unspecified: %s', xmlBlock.outerHTML);
   var id = xmlBlock.getAttribute('id');
 
-  block = workspace.newBlockWithXml(prototypeName, id, xmlBlock);
+  block = workspace.newBlockWithXml(prototypeName, id, xmlBlock, parentBlock);
 
   var blockChild = null;
   for (var i = 0, xmlChild; xmlChild = xmlBlock.childNodes[i]; i++) {
@@ -757,7 +757,7 @@ Blockly.Xml.domToBlockHeadless_ = function(xmlBlock, workspace) {
         }
         if (childBlockElement) {
           blockChild = Blockly.Xml.domToBlockHeadless_(childBlockElement,
-              workspace);
+              workspace, block);
           if (blockChild.outputConnection) {
             input.connection.connect(blockChild.outputConnection);
           } else if (blockChild.previousConnection) {
@@ -779,7 +779,7 @@ Blockly.Xml.domToBlockHeadless_ = function(xmlBlock, workspace) {
           goog.asserts.assert(!block.nextConnection.isConnected(),
               'Next statement is already connected.');
           blockChild = Blockly.Xml.domToBlockHeadless_(childBlockElement,
-              workspace);
+              workspace, block);
           goog.asserts.assert(blockChild.previousConnection,
               'Next block does not have previous statement.');
           block.nextConnection.connect(blockChild.previousConnection);
