@@ -208,9 +208,8 @@ Blockly.Block = function(workspace, prototypeName, opt_id, xmlBlock) {
           switch (xmlChild.nodeName.toLowerCase()) {
             case 'field':
               args0.push({
-                "type": "field_dropdown",
-                "name": name,
-                "options": []
+                "type": "field_input",
+                "name": name
               });
               protoName += " " + name + "= %" + args0.length;
               break;
@@ -243,7 +242,11 @@ Blockly.Block = function(workspace, prototypeName, opt_id, xmlBlock) {
                 temp.jsonInit = function (j) {
                   json = j;
                 }
-                temp.init();
+                try {
+                  temp.init();
+                } catch (e) {
+                  console.log(e);
+                }
                 delete temp.jsonInit;
                 if (json) {
                   var i = 0;
