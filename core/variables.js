@@ -164,7 +164,7 @@ Blockly.Variables.noVariableText = function() {
 * @return {string} New variable name.
 */
 Blockly.Variables.generateUniqueName = function(workspace) {
-  //return 'i';
+  return 'i';
   var variableList = workspace.getAllVariables();
   var newName = '';
   if (variableList.length) {

@@ -165,6 +165,6 @@ Blockly.FieldTextDropdown.prototype.onHide = Blockly.FieldDropdown.prototype.onH
  * @param {!goog.ui.Menu} menu The Menu component clicked.
  * @param {!goog.ui.MenuItem} menuItem The MenuItem selected within menu.
  */
-Blockly.FieldDropdown.prototype.onItemSelected = Blockly.FieldDropdown.prototype.onItemSelected;
+Blockly.FieldTextDropdown.prototype.onItemSelected = Blockly.FieldDropdown.prototype.onItemSelected;
 
 Blockly.Field.register('field_textdropdown', Blockly.FieldTextDropdown);
