@@ -223,7 +223,7 @@ Blockly.DataCategory.addDeleteOfList = function(xmlList, variable) {
   //   </value>
   // </block>
   Blockly.DataCategory.addBlock(xmlList, variable, 'data_deleteoflist', 'LIST',
-      ['INDEX', 'math_integer', 1]);
+      ['INDEX_', 'data_listindexrandom', 1]);
 };
 
 /**
@@ -259,7 +259,7 @@ Blockly.DataCategory.addInsertAtList = function(xmlList, variable) {
   //   </value>
   // </block>
   Blockly.DataCategory.addBlock(xmlList, variable, 'data_insertatlist', 'LIST',
-      ['INDEX', 'math_integer', 1], ['ITEM', 'text', Blockly.Msg.DEFAULT_LIST_ITEM]);
+      ['INDEX_', 'data_listindexrandom', 1], ['ITEM', 'text', Blockly.Msg.DEFAULT_LIST_ITEM]);
 };
 
 /**
@@ -282,7 +282,7 @@ Blockly.DataCategory.addReplaceItemOfList = function(xmlList, variable) {
   //   </value>
   // </block>
   Blockly.DataCategory.addBlock(xmlList, variable, 'data_replaceitemoflist',
-      'LIST', ['INDEX', 'math_integer', 1], ['ITEM', 'text', Blockly.Msg.DEFAULT_LIST_ITEM]);
+      'LIST', ['INDEX_', 'data_listindexrandom', 1], ['ITEM', 'text', Blockly.Msg.DEFAULT_LIST_ITEM]);
 };
 
 /**
@@ -294,13 +294,13 @@ Blockly.DataCategory.addItemOfList = function(xmlList, variable) {
   // <block type="data_itemoflist">
   //   <field name="LIST" variabletype="list" id="">variablename</field>
   //   <value name="INDEX">
-  //     <shadow type="math_integer">
-  //       <field name="NUM">1</field>
+  //     <shadow type="data_listindexrandom">
+  //       <field name="INDEX">1</field>
   //     </shadow>
   //   </value>
   // </block>
   Blockly.DataCategory.addBlock(xmlList, variable, 'data_itemoflist', 'LIST',
-      ['INDEX', 'math_integer', 1]);
+      ['INDEX_', 'data_listindexrandom', 1]);
 };
 
 /** Construct and add a data_itemnumoflist block to xmlList.
@@ -458,6 +458,10 @@ Blockly.DataCategory.createValue = function(valueName, type, value) {
       break;
     case 'INDEX':
       fieldName = 'NUM';
+      break;
+    case 'INDEX_':
+      valueName = 'INDEX';
+      fieldName = 'INDEX';
       break;
     case 'VALUE':
       if (type === 'math_number') {
