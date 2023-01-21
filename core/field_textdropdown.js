@@ -135,12 +135,11 @@ Blockly.FieldTextDropdown.prototype.showEditor_ = function() {
 
 /**
  * Return a list of the options for this dropdown.
- * See: Blockly.FieldDropDown.prototype.getOptions_.
+ * See: Blockly.FieldDropDown.prototype.getOptions.
  * @return {!Array.<!Array.<string>>} Array of option tuples:
  *     (human-readable text, language-neutral name).
- * @private
  */
-Blockly.FieldTextDropdown.prototype.getOptions_ = Blockly.FieldDropdown.prototype.getOptions_;
+Blockly.FieldTextDropdown.prototype.getOptions = Blockly.FieldDropdown.prototype.getOptions;
 
 /**
  * Position a drop-down arrow at the appropriate location at render-time.
@@ -160,5 +159,12 @@ Blockly.FieldTextDropdown.prototype.showDropdown_ = Blockly.FieldDropdown.protot
  * Callback when the drop-down menu is hidden.
  */
 Blockly.FieldTextDropdown.prototype.onHide = Blockly.FieldDropdown.prototype.onHide;
+
+/**
+ * Handle the selection of an item in the dropdown menu.
+ * @param {!goog.ui.Menu} menu The Menu component clicked.
+ * @param {!goog.ui.MenuItem} menuItem The MenuItem selected within menu.
+ */
+Blockly.FieldDropdown.prototype.onItemSelected = Blockly.FieldDropdown.prototype.onItemSelected;
 
 Blockly.Field.register('field_textdropdown', Blockly.FieldTextDropdown);
