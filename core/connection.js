@@ -290,6 +290,8 @@ Blockly.Connection.prototype.isConnected = function() {
  * @private
  */
 Blockly.Connection.prototype.canConnectWithReason_ = function(target) {
+  if(window.Blockly && window.Blockly.removeChecks)
+    return Blockly.Connection.CAN_CONNECT;
   if (!target) {
     return Blockly.Connection.REASON_TARGET_NULL;
   }
@@ -338,24 +340,24 @@ Blockly.Connection.prototype.checkConnection_ = function(target) {
     case Blockly.Connection.CAN_CONNECT:
       break;
     case Blockly.Connection.REASON_SELF_CONNECTION:
-      throw 'Attempted to connect a block to itself.';
+      console.warn('Attempted to connect a block to itself.', this, target);
     case Blockly.Connection.REASON_DIFFERENT_WORKSPACES:
       // Usually this means one block has been deleted.
-      throw 'Blocks not on same workspace.';
+      console.warn('Blocks not on same workspace.', this, target);
     case Blockly.Connection.REASON_WRONG_TYPE:
-      throw 'Attempt to connect incompatible types.';
+      console.warn('Attempt to connect incompatible types.', this, target);
     case Blockly.Connection.REASON_TARGET_NULL:
-      throw 'Target connection is null.';
+      console.warn('Target connection is null.', this, target);
     case Blockly.Connection.REASON_CHECKS_FAILED:
       var msg = 'Connection checks failed. ';
       msg += this + ' expected '  + this.check_ + ', found ' + target.check_;
-      throw msg;
+      console.warn(msg, this, target);
     case Blockly.Connection.REASON_SHADOW_PARENT:
-      throw 'Connecting non-shadow to shadow block.';
+      console.warn('Connecting non-shadow to shadow block.', this, target);
     case Blockly.Connection.REASON_CUSTOM_PROCEDURE:
-      throw 'Trying to replace a shadow on a custom procedure definition.';
+      console.warn('Trying to replace a shadow on a custom procedure definition.', this, target);
     default:
-      throw 'Unknown connection failure: this should never happen!';
+      console.warn('Unknown connection failure: this should never happen!', this, target);
   }
 };
 
