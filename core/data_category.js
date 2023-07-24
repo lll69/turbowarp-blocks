@@ -223,6 +223,8 @@ Blockly.DataCategory.addDeleteOfList = function(xmlList, variable) {
   //   </value>
   // </block>
   Blockly.DataCategory.addBlock(xmlList, variable, 'data_deleteoflist', 'LIST',
+      ['INDEX', 'math_integer', 1]);
+  Blockly.DataCategory.addBlock(xmlList, variable, 'data_deleteoflist', 'LIST',
       ['INDEX_', 'data_listindexrandom', 1]);
 };
 
@@ -259,6 +261,8 @@ Blockly.DataCategory.addInsertAtList = function(xmlList, variable) {
   //   </value>
   // </block>
   Blockly.DataCategory.addBlock(xmlList, variable, 'data_insertatlist', 'LIST',
+      ['INDEX', 'math_integer', 1], ['ITEM', 'text', Blockly.Msg.DEFAULT_LIST_ITEM]);
+  Blockly.DataCategory.addBlock(xmlList, variable, 'data_insertatlist', 'LIST',
       ['INDEX_', 'data_listindexrandom', 1], ['ITEM', 'text', Blockly.Msg.DEFAULT_LIST_ITEM]);
 };
 
@@ -282,6 +286,8 @@ Blockly.DataCategory.addReplaceItemOfList = function(xmlList, variable) {
   //   </value>
   // </block>
   Blockly.DataCategory.addBlock(xmlList, variable, 'data_replaceitemoflist',
+      'LIST', ['INDEX', 'math_integer', 1], ['ITEM', 'text', Blockly.Msg.DEFAULT_LIST_ITEM]);
+  Blockly.DataCategory.addBlock(xmlList, variable, 'data_replaceitemoflist',
       'LIST', ['INDEX_', 'data_listindexrandom', 1], ['ITEM', 'text', Blockly.Msg.DEFAULT_LIST_ITEM]);
 };
 
@@ -299,6 +305,8 @@ Blockly.DataCategory.addItemOfList = function(xmlList, variable) {
   //     </shadow>
   //   </value>
   // </block>
+  Blockly.DataCategory.addBlock(xmlList, variable, 'data_itemoflist', 'LIST',
+      ['INDEX', 'math_integer', 1]);
   Blockly.DataCategory.addBlock(xmlList, variable, 'data_itemoflist', 'LIST',
       ['INDEX_', 'data_listindexrandom', 1]);
 };

@@ -336,7 +336,8 @@ Blockly.Connection.prototype.canConnectWithReason_ = function(target) {
  * @private
  */
 Blockly.Connection.prototype.checkConnection_ = function(target) {
-  switch (this.canConnectWithReason_(target)) {
+  var x;
+  switch (x = this.canConnectWithReason_(target)) {
     case Blockly.Connection.CAN_CONNECT:
       break;
     case Blockly.Connection.REASON_SELF_CONNECTION:
@@ -357,7 +358,7 @@ Blockly.Connection.prototype.checkConnection_ = function(target) {
     case Blockly.Connection.REASON_CUSTOM_PROCEDURE:
       console.warn('Trying to replace a shadow on a custom procedure definition.', this, target);
     default:
-      console.warn('Unknown connection failure: this should never happen!', this, target);
+      console.warn('Unknown connection failure: this should never happen! ' + x, this, target);
   }
 };
 
